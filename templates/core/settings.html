@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Ajustes</h1>
+<div class="grid gap-4">
+<section class="bg-white border rounded p-4">
+<h2 class="font-semibold mb-2">Hotel</h2>
+<form method="post">{% csrf_token %}
+{{ hotel_form.as_p }}
+<button name="save_hotel" class="px-3 py-2 bg-blue-600 text-white rounded">Guardar</button>
+</form>
+</section>
+<section class="bg-white border rounded p-4">
+<h2 class="font-semibold mb-2">Habitaciones</h2>
+<form method="post" action="{% url 'room_create' %}" class="grid md:grid-cols-5 gap-2 items-end">{% csrf_token %}
+<div>{{ room_form.code.label_tag }}{{ room_form.code }}</div>
+<div>{{ room_form.type.label_tag }}{{ room_form.type }}</div>
+<div>{{ room_form.capacity.label_tag }}{{ room_form.capacity }}</div>
+<div>{{ room_form.is_active.label_tag }}{{ room_form.is_active }}</div>
+<button class="px-3 py-2 border rounded">Guardar</button>
+</form>
+<div class="mt-3 space-y-2">
+{% for room in rooms %}
+<div class="border rounded p-2 flex justify-between items-center">
+  <div>{{ room.code }} {% if not room.is_active %}<span class="text-xs">(inactiva)</span>{% endif %}</div>
+  <div class="flex gap-2">
+    <form method="post" action="{% url 'room_edit' room.id %}">{% csrf_token %}<input name="code" value="{{ room.code }}" class="border rounded px-2 py-1 w-24"><input name="type" value="{{ room.type }}" class="border rounded px-2 py-1 w-24"><input name="capacity" value="{{ room.capacity }}" class="border rounded px-2 py-1 w-16"><label><input type="checkbox" name="is_active" {% if room.is_active %}checked{% endif %}> activa</label><button class="px-2 py-1 border rounded">Editar</button></form>
+    <form method="post" action="{% url 'room_toggle' room.id %}">{% csrf_token %}<button class="px-2 py-1 border rounded">Desactivar</button></form>
+  </div>
+</div>
+{% endfor %}
+</div>
+</section>
+<section class="bg-white border rounded p-4">
+<h2 class="font-semibold mb-2">Exportar</h2>
+<a href="{% url 'export_reservations_csv' %}" class="px-3 py-2 border rounded inline-block">Exportar reservas CSV</a>
+</section>
+</div>
+{% endblock %}

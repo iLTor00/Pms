@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-semibold">Calendario</h1>
+  <button hx-get="{% url 'reservation_create_modal' %}" hx-target="#modal-root" class="bg-blue-600 text-white px-3 py-2 rounded">+ Nueva reserva</button>
+</div>
+<div class="flex gap-2 mb-3">
+  <a href="?days=7" class="px-2 py-1 rounded border">7</a><a href="?days=14" class="px-2 py-1 rounded border">14</a><a href="?days=30" class="px-2 py-1 rounded border">30</a>
+  <form class="ml-auto"><input name="q" value="{{ q }}" placeholder="Buscar huésped o teléfono" class="border rounded px-2 py-1"></form>
+</div>
+{% if q %}<div class="bg-white border rounded p-2 mb-3">{% for r in search %}<a class="block text-sm" hx-get="{% url 'reservation_detail_modal' r.id %}" hx-target="#modal-root">{{ r.guest_name }} - {{ r.room.code }}</a>{% empty %}Sin resultados{% endfor %}</div>{% endif %}
+<div class="overflow-auto bg-white border rounded">
+<table class="min-w-full text-sm"><thead><tr><th class="p-2 text-left">Habitación</th>{% for d in dates %}<th class="p-2">{{ d|date:'d/m' }}</th>{% endfor %}</tr></thead>
+<tbody>
+{% for room in rooms %}
+<tr class="border-t"><td class="p-2 font-medium">{{ room.code }}</td>
+{% for d in dates %}
+<td class="p-1 border-l align-top min-w-24">
+  <button hx-get="{% url 'reservation_create_modal' %}?room={{ room.id }}&date_in={{ d|date:'Y-m-d' }}" hx-target="#modal-root" class="w-full h-6 text-xs text-slate-300 hover:bg-slate-100">+</button>
+  {% for r in reservations %}{% if r.room_id == room.id and d >= r.date_in and d < r.date_out %}
+  <button hx-get="{% url 'reservation_detail_modal' r.id %}" hx-target="#modal-root" class="w-full text-left text-xs px-1 rounded {% if r.status == 'reserved' %}bg-blue-500 text-white{% else %}bg-green-500 text-white{% endif %} {% if r.date_out == d %}border-2 border-yellow-300{% endif %}">{{ r.guest_name }}</button>
+  {% endif %}{% endfor %}
+  {% for b in blocks %}{% if b.room_id == room.id and d >= b.date_in and d < b.date_out %}<button hx-get="{% url 'block_detail_modal' b.id %}" hx-target="#modal-root" class="w-full text-left text-xs px-1 rounded bg-gray-400 text-white">Bloqueo</button>{% endif %}{% endfor %}
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</tbody></table></div>
+{% endblock %}

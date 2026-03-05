@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Reservas</h1>
+<div class="flex gap-2 mb-3">
+  <a href="?tab=proximas" class="px-2 py-1 border rounded">Próximas</a>
+  <a href="?tab=en_curso" class="px-2 py-1 border rounded">En curso</a>
+  <a href="?tab=finalizadas" class="px-2 py-1 border rounded">Finalizadas</a>
+  <a href="?tab=canceladas" class="px-2 py-1 border rounded">Canceladas</a>
+  <form class="ml-auto"><input name="q" value="{{ q }}" placeholder="Buscar" class="border rounded px-2 py-1"></form>
+</div>
+<div class="bg-white border rounded">
+{% for r in reservations %}
+<div class="p-3 border-b flex justify-between">
+  <div>{{ r.guest_name }} · {{ r.room.code }} · {{ r.date_in }}→{{ r.date_out }}</div>
+  <button hx-get="{% url 'reservation_detail_modal' r.id %}" hx-target="#modal-root" class="text-blue-600">Detalle</button>
+</div>
+{% empty %}<div class="p-3">Sin reservas</div>{% endfor %}
+</div>
+{% endblock %}

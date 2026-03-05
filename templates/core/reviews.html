@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Reseñas</h1>
+<div class="grid md:grid-cols-4 gap-3 mb-4 text-sm">
+  <div class="bg-white border rounded p-3">Solicitudes (hoy)<div class="text-2xl font-semibold">{{ kpi_solicitudes }}</div></div>
+  <div class="bg-white border rounded p-3">Respondidas (hoy)<div class="text-2xl font-semibold">{{ kpi_respondidas }}</div></div>
+  <div class="bg-white border rounded p-3">Promedio (últimos 30 días)<div class="text-2xl font-semibold">{{ kpi_promedio|floatformat:1 }}</div></div>
+  <div class="bg-white border rounded p-3">Feedback privado (últimos 30 días)<div class="text-2xl font-semibold">{{ kpi_privado }}</div></div>
+</div>
+<div class="flex gap-2 mb-3">
+<a href="?tab=pending" class="px-2 py-1 border rounded">Pendientes</a>
+<a href="?tab=sent" class="px-2 py-1 border rounded">Enviadas</a>
+<a href="?tab=responded" class="px-2 py-1 border rounded">Respondidas</a>
+<a href="?tab=private" class="px-2 py-1 border rounded">Feedback privado</a>
+</div>
+<div class="bg-white border rounded">
+{% for row in review_rows %}{% with rr=row.obj response=row.response %}
+<div class="p-3 border-b text-sm">
+  <div class="flex justify-between">
+    <div>{{ rr.reservation.guest_name }} · {{ rr.reservation.room.code }} · {{ rr.reservation.date_in }}→{{ rr.reservation.date_out }}</div>
+    <div>{{ rr.status }} {% if not rr.reservation.guest_phone %}<span class="px-2 py-1 bg-slate-100 rounded">sin contacto</span>{% endif %}</div>
+  </div>
+  <div class="mt-2 flex gap-2">
+    {% if rr.status == 'pending' or rr.status == 'sent' %}{% if rr.reservation.guest_phone %}<a target="_blank" href="{{ row.wa_url }}" class="px-2 py-1 border rounded">Generar WhatsApp</a>{% endif %}{% endif %}
+    {% if rr.status == 'pending' %}<form method="post" action="{% url 'mark_review_sent' rr.id %}">{% csrf_token %}<button class="px-2 py-1 border rounded">Marcar enviado</button></form>{% endif %}
+    {% if rr.status == 'responded' and response %}<span>Puntaje: {{ response.score }}</span>{% endif %}
+    {% if tab == 'private' and response %}<span>{{ response.feedback }}</span>{% endif %}
+  </div>
+</div>
+{% endwith %}{% empty %}<div class="p-3">Sin datos</div>{% endfor %}
+</div>
+{% endblock %}

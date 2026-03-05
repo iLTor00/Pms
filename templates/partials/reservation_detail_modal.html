@@ -1,0 +1,10 @@
+<div class="fixed inset-0 bg-black/40 flex items-center justify-center"><div class="bg-white rounded p-4 w-full max-w-lg">
+<h2 class="text-lg font-semibold">Detalle de reserva</h2>
+<p>{{ reservation.guest_name }} - {{ reservation.room.code }}</p>
+<div class="flex gap-2 mt-3">
+  <button hx-get="{% url 'reservation_edit_modal' reservation.id %}" hx-target="#modal-root" class="px-3 py-2 border rounded">Editar</button>
+  <form method="post" action="{% url 'reservation_cancel' reservation.id %}">{% csrf_token %}<button class="px-3 py-2 border rounded">Anular</button></form>
+  {% if reservation.status == 'reserved' %}<form method="post" action="{% url 'reservation_checkin' reservation.id %}">{% csrf_token %}<button class="px-3 py-2 bg-green-600 text-white rounded">Check-in</button></form>{% endif %}
+  {% if reservation.status == 'checked_in' %}<form method="post" action="{% url 'reservation_checkout' reservation.id %}">{% csrf_token %}<button class="px-3 py-2 bg-blue-600 text-white rounded">Check-out</button></form>{% endif %}
+</div>
+</div></div>

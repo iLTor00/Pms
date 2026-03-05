@@ -1,0 +1,6 @@
+<div class="fixed inset-0 bg-black/40 flex items-center justify-center"><div class="bg-white rounded p-4 w-full max-w-lg">
+<h2 class="text-lg font-semibold">Bloqueo</h2>
+<p>{{ block.room.code }} · {{ block.date_in }}→{{ block.date_out }}</p>
+<p>{{ block.reason }}</p>
+<button hx-get="{% url 'block_edit_modal' block.id %}" hx-target="#modal-root" class="px-3 py-2 border rounded">Editar bloqueo</button>
+</div></div>

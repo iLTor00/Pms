@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Ingresar{% endblock %}
+{% block content %}
+<div class="card w-full max-w-md p-8">
+  <h1 class="h2 mb-2">Ingresar</h1>
+  <p class="text-slate-600 mb-6">Accedé a tu panel del hotel.</p>
+  <form method="post" class="space-y-4">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn-primary w-full">Guardar</button>
+  </form>
+</div>
+{% endblock %}

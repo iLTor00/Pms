@@ -1,0 +1,7 @@
+<div class="modal-overlay"><div class="modal-card p-6">
+  <div class="flex items-center justify-between mb-4"><h2 class="h3">{{ title }}</h2><button type="button" onclick="document.getElementById('modal-root').innerHTML=''" class="btn-secondary !py-2">Cancelar</button></div>
+  <form method="post" hx-post="" hx-target="#modal-root" class="space-y-3">{% csrf_token %}
+    {{ form.as_p }}
+    <div class="flex gap-2"><button class="btn-primary">Guardar</button><button type="button" onclick="document.getElementById('modal-root').innerHTML=''" class="btn-secondary">Cancelar</button></div>
+  </form>
+</div></div>

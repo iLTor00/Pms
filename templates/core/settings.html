@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid gap-4">
+  <section class="card p-5"><h2 class="h3 mb-4">Hotel</h2><form method="post" class="space-y-3">{% csrf_token %}{{ hotel_form.as_p }}<button name="save_hotel" class="btn-primary">Guardar</button></form></section>
+  <section class="card p-5"><h2 class="h3 mb-4">Habitaciones</h2>
+    <form method="post" action="{% url 'room_create' %}" class="grid md:grid-cols-5 gap-3 items-end mb-4">{% csrf_token %}
+      <div>{{ room_form.code.label_tag }}{{ room_form.code }}</div><div>{{ room_form.type.label_tag }}{{ room_form.type }}</div><div>{{ room_form.capacity.label_tag }}{{ room_form.capacity }}</div><div>{{ room_form.is_active.label_tag }}{{ room_form.is_active }}</div>
+      <button class="btn-primary">Guardar</button>
+    </form>
+    <div class="space-y-2">{% for room in rooms %}<div class="card p-3 flex items-center justify-between"><div class="font-medium">{{ room.code }} {% if not room.is_active %}<span class="badge badge-gray">inactiva</span>{% endif %}</div><div class="flex gap-2"><form method="post" action="{% url 'room_edit' room.id %}" class="flex gap-2 items-center">{% csrf_token %}<input name="code" value="{{ room.code }}" class="input !py-2 w-24"><input name="type" value="{{ room.type }}" class="input !py-2 w-28"><input name="capacity" value="{{ room.capacity }}" class="input !py-2 w-20"><label class="text-xs"><input type="checkbox" name="is_active" {% if room.is_active %}checked{% endif %}> activa</label><button class="btn-secondary !py-2">Editar</button></form><form method="post" action="{% url 'room_toggle' room.id %}">{% csrf_token %}<button class="btn-secondary !py-2">Desactivar</button></form></div></div>{% endfor %}</div>
+  </section>
+  <section class="card p-5"><h2 class="h3 mb-4">Exportar</h2><a href="{% url 'export_reservations_csv' %}" class="btn-primary inline-block">Exportar reservas CSV</a></section>
+</div>
+{% endblock %}

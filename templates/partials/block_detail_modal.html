@@ -1,0 +1,6 @@
+<div class="modal-overlay"><div class="modal-card p-6">
+  <h2 class="h3 mb-2">Bloqueo</h2>
+  <p class="text-slate-600">{{ block.room.code }} · {{ block.date_in }}→{{ block.date_out }}</p>
+  {% if block.reason %}<p class="mt-2">{{ block.reason }}</p>{% endif %}
+  <div class="mt-4"><button hx-get="{% url 'block_edit_modal' block.id %}" hx-target="#modal-root" class="btn-secondary">Editar bloqueo</button></div>
+</div></div>

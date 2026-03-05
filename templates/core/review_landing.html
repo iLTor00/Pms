@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card w-full max-w-xl p-8">
+  <h1 class="h2 mb-2">{{ hotel.name }}</h1>
+  <p class="text-slate-600 mb-5">¿Cómo fue tu estadía?</p>
+  <form method="post" class="space-y-4">{% csrf_token %}
+    <div class="grid grid-cols-5 gap-2">{% for i in '12345' %}<button name="score" value="{{ i }}" class="btn-secondary !px-0 !py-4 text-lg">{{ i }}</button>{% endfor %}</div>
+    <div><label class="block mb-1 text-slate-600">¿Qué pasó?</label><textarea name="feedback" class="input min-h-28"></textarea></div>
+    <button class="btn-primary w-full">Guardar</button>
+  </form>
+</div>
+{% endblock %}

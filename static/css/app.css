@@ -1,0 +1,35 @@
+:root {
+  --bg: #F8FAFC;
+  --card: #ffffff;
+  --border: #E2E8F0;
+  --text: #0F172A;
+  --muted: #475569;
+  --brand: #2563EB;
+  --brand-light: #3B82F6;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+}
+body { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+.h1 { font-size: 28px; line-height: 1.2; font-weight: 700; }
+.h2 { font-size: 22px; line-height: 1.25; font-weight: 700; }
+.h3 { font-size: 18px; line-height: 1.3; font-weight: 600; }
+.app-shell { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+.sidebar-link { display:flex; align-items:center; gap:.625rem; border-radius:.625rem; padding:.625rem .75rem; color: var(--muted); font-weight:500; }
+.sidebar-link:hover{ background:#F1F5F9; color:var(--text); }
+.sidebar-link.active{ background:#DBEAFE; color:var(--brand); font-weight:600; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:12px; }
+.btn-primary { background:var(--brand); color:#fff; border-radius:10px; padding:10px 14px; font-weight:600; }
+.btn-primary:hover{ background:#1D4ED8; }
+.btn-secondary { border:1px solid var(--border); background:#fff; color:var(--text); border-radius:10px; padding:10px 14px; font-weight:600; }
+.btn-secondary:hover{ background:#F8FAFC; }
+.input { border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#fff; width:100%; }
+.badge { font-size:12px; padding:3px 8px; border-radius:999px; font-weight:600; }
+.badge-blue { background:#DBEAFE; color:#1D4ED8; }
+.badge-green { background:#D1FAE5; color:#047857; }
+.badge-gray { background:#E2E8F0; color:#334155; }
+.badge-amber { background:#FEF3C7; color:#B45309; }
+.table-clean tr + tr { border-top:1px solid var(--border); }
+.table-clean tbody tr:hover { background:#F8FAFC; }
+.modal-overlay{ position:fixed; inset:0; background:rgba(15,23,42,.55); display:flex; align-items:center; justify-content:center; padding:16px; z-index:50; }
+.modal-card{ width:100%; max-width:640px; background:#fff; border-radius:14px; border:1px solid var(--border); box-shadow:0 20px 40px rgba(2,6,23,.2); }

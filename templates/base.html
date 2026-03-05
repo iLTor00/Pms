@@ -1,26 +1,26 @@
+{% load static %}
 <!doctype html>
 <html lang="es-AR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PMS</title>
+  <title>{% block title %}PMS{% endblock %}</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body>
   {% if user.is_authenticated %}
-  <header class="bg-white border-b">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <nav class="flex gap-4">
-        {% for route,label in main_nav %}
-          <a class="text-sm hover:text-blue-600" href="{% url route %}">{{ label }}</a>
-        {% endfor %}
-      </nav>
-      <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="text-sm">Salir</button></form>
+  <div class="app-shell">
+    {% include 'components/sidebar.html' %}
+    <div class="min-w-0">
+      {% include 'components/topbar.html' %}
+      <main class="p-6">{% block content %}{% endblock %}</main>
     </div>
-  </header>
+  </div>
+  {% else %}
+  <main class="min-h-screen flex items-center justify-center p-4">{% block content %}{% endblock %}</main>
   {% endif %}
-  <main class="max-w-7xl mx-auto p-4">{% block content %}{% endblock %}</main>
   <div id="modal-root"></div>
 </body>
 </html>

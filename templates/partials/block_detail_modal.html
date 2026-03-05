@@ -1,6 +1,6 @@
-<div class="fixed inset-0 bg-black/40 flex items-center justify-center"><div class="bg-white rounded p-4 w-full max-w-lg">
-<h2 class="text-lg font-semibold">Bloqueo</h2>
-<p>{{ block.room.code }} · {{ block.date_in }}→{{ block.date_out }}</p>
-<p>{{ block.reason }}</p>
-<button hx-get="{% url 'block_edit_modal' block.id %}" hx-target="#modal-root" class="px-3 py-2 border rounded">Editar bloqueo</button>
+<div class="modal-overlay"><div class="modal-card p-6">
+  <h2 class="h3 mb-2">Bloqueo</h2>
+  <p class="text-slate-600">{{ block.room.code }} · {{ block.date_in }}→{{ block.date_out }}</p>
+  {% if block.reason %}<p class="mt-2">{{ block.reason }}</p>{% endif %}
+  <div class="mt-4"><button hx-get="{% url 'block_edit_modal' block.id %}" hx-target="#modal-root" class="btn-secondary">Editar bloqueo</button></div>
 </div></div>

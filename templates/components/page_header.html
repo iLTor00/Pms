@@ -1,0 +1,7 @@
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="h1">{{ title }}</h1>
+    {% if subtitle %}<p class="text-slate-600 mt-1">{{ subtitle }}</p>{% endif %}
+  </div>
+  <div>{{ actions|safe }}</div>
+</div>

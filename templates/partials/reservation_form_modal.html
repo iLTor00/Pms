@@ -1,9 +1,9 @@
-<div class="fixed inset-0 bg-black/40 flex items-center justify-center">
-  <div class="bg-white rounded p-4 w-full max-w-lg">
-    <h2 class="text-lg font-semibold mb-2">{{ title }}</h2>
-    <form method="post" hx-post="" hx-target="#modal-root">{% csrf_token %}
+<div class="modal-overlay">
+  <div class="modal-card p-6">
+    <div class="flex items-center justify-between mb-4"><h2 class="h3">{{ title }}</h2><button type="button" onclick="document.getElementById('modal-root').innerHTML=''" class="btn-secondary !py-2">Cancelar</button></div>
+    <form method="post" hx-post="" hx-target="#modal-root" class="space-y-3">{% csrf_token %}
       {{ form.as_p }}
-      <div class="flex gap-2"><button class="bg-blue-600 text-white px-3 py-2 rounded">Guardar</button><button type="button" onclick="document.getElementById('modal-root').innerHTML=''" class="px-3 py-2 border rounded">Cancelar</button></div>
+      <div class="flex gap-2"><button class="btn-primary">Guardar</button><button type="button" onclick="document.getElementById('modal-root').innerHTML=''" class="btn-secondary">Cancelar</button></div>
     </form>
   </div>
 </div>

@@ -1,0 +1,11 @@
+<aside class="bg-white border-r border-slate-200 p-4">
+  <div class="h2 mb-6 text-blue-600">PMS</div>
+  <nav class="space-y-1">
+    {% for route,label in main_nav %}
+      <a href="{% url route %}" class="sidebar-link {% if request.resolver_match.url_name == route %}active{% endif %}">
+        <span class="w-4 h-4 rounded bg-slate-200"></span>
+        <span>{{ label }}</span>
+      </a>
+    {% endfor %}
+  </nav>
+</aside>
